@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults | pm25-asthma-ca-analysis</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="pm25-asthma-ca-analysis" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults","name":"pm25-asthma-ca-analysis","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="pm25-asthma-ca-analysis" />
+</head>
+<body><header class="site-header" role="banner">
+  <div class="wrapper">
+    <!-- Site title as a <p> instead of <h1> -->
+    <p class="site-title">pm25-asthma-ca-analysis</p>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home"><h1 class="page-heading">The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults</h1><p>by Kate Feng, Katelyn Abille, Heidi Tam, Kyla Park, Felix Najera</p>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>Air pollutants such as particulate matter 2.5 (PM2.5) are a significant public health concern, worsened by the effects of climate change. Our study investigates the correlation between PM2.5 pollution levels and adult asthma prevalence in California, aiming to identify regional patterns and explore confounding factors. We integrated county-level asthma prevalence data from the CDC PLACES dataset with EPA’s PM2.5 air quality data.</p>
+
+<p>After preprocessing and aggregating the datasets at the county level, we explored spatial and temporal patterns. Our results revealed that Central California counties consistently exhibit the highest PM2.5 concentrations—surpassing health advisory thresholds—while asthma rates showed mixed alignment, with high prevalence in both Central and Northern California. This suggests the influence of additional regional factors like urbanization and healthcare access.</p>
+
+<p>While our exploratory analysis found regional overlaps between PM2.5 and asthma, the relationship is not conclusively causal. Further studies incorporating socioeconomic, medical access, and environmental confounders are warranted.</p>
+
+<hr />
+
+<h2 id="research-question">Research Question</h2>
+
+<p><strong>How do the prevalence and proximity to PM2.5 pollution correlate with the incidences of asthma in adults in California?</strong></p>
+
+<hr />
+
+<h2 id="background-and-prior-work">Background and Prior Work</h2>
+
+<p>The American Lung Association conducts annual “State of the Air” reports and recently revealed that 40% of Americans live in regions with unhealthy air pollution levels. This indicates a decline in progress toward clean air, which is assumed to have been exacerbated by the effects of climate change. Since 2020, the number of affected individuals has surged by nearly 12 million, rising from 131 million. This alarming trend underscores the need to examine how industrial pollutants impact public health, particularly regarding respiratory diseases such as asthma. As air quality continues to deteriorate in many urban centers, it is essential to investigate the correlation between pollution exposure and the incidence of these health issues, especially among the most vulnerable populations in densely populated areas of the United States.</p>
+
+<p>In 1993, scientists were interested in the association between air pollution and daily mortality rates and decided to conduct a population-based, cross-sectional survey investigating cities in the United States. They controlled for individual risk factors in their data collection and conducted a survival analysis with Cox proportional-hazard regression modeling. They studied 8,111 adults in 6 U.S. cities and followed up on them fourteen to sixteen years later. Unsurprisingly, the results demonstrated that mortality was strongly associated with cigarette smoking. On average, the mortality rate of the most polluted cities in the U.S. was 1.26 times greater than the mortality rate of the least polluted cities. There was a strong positive correlation between air pollution with lung cancer and pulmonary disease.1 This relates to our project because we are interested in seeing if there is a relationship between the prevalence of respiratory disease with air pollutants.</p>
+
+<p>Another study conducted was in Italy starting in 2000. The most populated cities of Italy were included in this study, with the exception of Naples. The researchers ran their analyses on the risks of hospital admissions and mortality rates by cities using Bayesian modeling. The researchers involved found positive associations between death and hospital admissions for both cardiovascular and respiratory diseases. They also found trends in mortality when ozone was present in the warm seasons. The scientists found the effect of pollutants and risks of mortality were statistically more significant during the warm season and could have many challenges associated with it. For example, hospitals may have less bedding available during the warm season. 2 This relates to our project because we are interested in how external factors may influence the prevalence of respiratory diseases.</p>
+
+<p><strong>Citations</strong></p>
+
+<p>^ Dockery, D. W., Pope, C. A., 3rd, Xu, X., Spengler, J. D., Ware, J. H., Fay, M. E., Ferris, B. G., Jr, &amp; Speizer, F. E. (1993). An association between air pollution and mortality in six U.S. cities. The New England journal of medicine, 329(24), 1753–1759. https://doi.org/10.1056/NEJM199312093292401
+^ Biggeri, A., Bellini, P., Terracini, B., &amp; Italian MISA Group (2001). Metanalisi italiana degli studi sugli effetti a breve termine dell’inquinamento atmosferico [Meta-analysis of the Italian studies on short-term effects of air pollution]. Epidemiologia e prevenzione, 25(2 Suppl), 1–71. https://pubmed.ncbi.nlm.nih.gov/11515188/
+^ Borunda, A. (2024, April 24). 130 million Americans breathe unhealthy air, State of the Air report finds. NPR. https://www.npr.org/2024/04/24/1246729103/unhealthy-dangerous-air-hurts-130-million-americans</p>
+
+<hr />
+
+<h2 id="hypothesis">Hypothesis</h2>
+
+<blockquote>
+  <p>There will be a strong positive correlation between the prevalence and proximity to PM2.5 pollution and the incidence of asthma in adults, in the state of California.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="data-sources">Data Sources</h2>
+
+<ul>
+  <li>
+    <p><strong>CDC PLACES County-Level Health Data</strong>
+<a href="https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data">Link</a></p>
+  </li>
+  <li>
+    <p><strong>EPA Air Quality System (AQS) PM2.5 Data</strong>
+<a href="https://www.epa.gov/outdoor-air-quality-data/download-daily-data">Link</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="data-collection--preprocessing">Data Collection &amp; Preprocessing</h2>
+
+<h3 id="cdc-places-county-level-asthma-prevalence">CDC PLACES: County-Level Asthma Prevalence</h3>
+
+<p>We pulled the full dataset via API and filtered for:</p>
+
+<ul>
+  <li>California counties only</li>
+  <li>Rows with <code class="language-plaintext highlighter-rouge">measureid == 'CASTHMA'</code> (Adult asthma)</li>
+  <li>Crude prevalence percentages</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">io</span>
+
+<span class="c1"># Load in CDC PLACES data in safe chunks
+</span><span class="k">def</span> <span class="nf">places_api</span><span class="p">(</span><span class="n">places_url</span><span class="p">):</span>
+    <span class="n">all_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">50000</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">"$limit"</span><span class="p">:</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="s">"$offset"</span><span class="p">:</span> <span class="n">offset</span><span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">places_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">data_chunk</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="p">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">data_chunk</span><span class="p">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">all_data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_chunk</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="n">chunk_size</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_data</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Load and filter California data
+</span><span class="n">places</span> <span class="o">=</span> <span class="n">places_api</span><span class="p">(</span><span class="s">"https://data.cdc.gov/resource/swc5-untb.csv"</span><span class="p">)</span>
+<span class="n">places_ca</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="n">places</span><span class="p">[</span><span class="s">"stateabbr"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"CA"</span><span class="p">]</span>
+<span class="n">places_ca_asthma</span> <span class="o">=</span> <span class="n">places_ca</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">places_ca</span><span class="p">[</span><span class="s">"measureid"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"CASTHMA"</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">places_ca</span><span class="p">[</span><span class="s">"data_value_type"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"Crude prevalence"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Validation Check:</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Confirm all 58 counties are included
+</span><span class="n">places_counties</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">places_ca_asthma</span><span class="p">[</span><span class="s">"locationname"</span><span class="p">].</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">expected_ca_counties</span> <span class="o">=</span> <span class="p">{...}</span>  <span class="c1"># full set of 58 counties
+</span><span class="k">assert</span> <span class="n">places_counties</span> <span class="o">==</span> <span class="n">expected_ca_counties</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="epa-aqs-pm25-pollution-data">EPA AQS: PM2.5 Pollution Data</h3>
+
+<p>We used EPA’s AirData download tool to retrieve daily mean PM2.5 values for California in 2022. After cleaning, we aggregated by county to get annual averages:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epa</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"epa_california_2022.csv"</span><span class="p">)</span>
+
+<span class="c1"># Keep relevant columns
+</span><span class="n">epa</span> <span class="o">=</span> <span class="n">epa</span><span class="p">[[</span><span class="s">"Date"</span><span class="p">,</span> <span class="s">"County"</span><span class="p">,</span> <span class="s">"Arithmetic Mean"</span><span class="p">,</span> <span class="s">"AQI"</span><span class="p">]]</span>
+<span class="n">epa</span> <span class="o">=</span> <span class="n">epa</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">"Arithmetic Mean"</span><span class="p">:</span> <span class="s">"PM2.5_Concentration"</span><span class="p">,</span>
+    <span class="s">"AQI"</span><span class="p">:</span> <span class="s">"AQI_Value"</span>
+<span class="p">})</span>
+
+<span class="c1"># Ensure county names match PLACES dataset format
+</span><span class="n">epa</span><span class="p">[</span><span class="s">"County"</span><span class="p">]</span> <span class="o">=</span> <span class="n">epa</span><span class="p">[</span><span class="s">"County"</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">" County"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+
+<span class="c1"># Aggregate average PM2.5 values by county
+</span><span class="n">epa_grouped</span> <span class="o">=</span> <span class="n">epa</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">"County"</span><span class="p">)[[</span><span class="s">"PM2.5_Concentration"</span><span class="p">,</span> <span class="s">"AQI_Value"</span><span class="p">]].</span><span class="n">mean</span><span class="p">().</span><span class="n">reset_index</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="merging-the-datasets">Merging the Datasets</h3>
+
+<p>We merged the datasets by matching county names:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Align column names
+</span><span class="n">places_ca_asthma</span> <span class="o">=</span> <span class="n">places_ca_asthma</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">"locationname"</span><span class="p">:</span> <span class="s">"County"</span><span class="p">})</span>
+
+<span class="c1"># Merge by county
+</span><span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">places_ca_asthma</span><span class="p">,</span> <span class="n">epa_grouped</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">"County"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">"inner"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This left us with a clean dataset, one row per county, containing:</p>
+
+<ul>
+  <li>Adult asthma prevalence (<code class="language-plaintext highlighter-rouge">data_value</code>)</li>
+  <li>Average PM2.5 concentration</li>
+  <li>Average AQI value</li>
+</ul>
+
+<hr />
+
+<h2 id="cleaning-the-data">Cleaning the Data</h2>
+
+<p>To prepare for analysis, we cleaned and filtered both the <strong>asthma prevalence</strong> and <strong>PM2.5 air pollution</strong> datasets to focus specifically on <strong>California in 2022</strong>. Below is an overview of our filtering and transformation process.</p>
+
+<hr />
+
+<h3 id="asthma-data-places-dataset">Asthma Data (PLACES Dataset)</h3>
+
+<p>We begin by narrowing our scope to only California counties and filtering for the <strong>“Current asthma among adults”</strong> measure:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_places</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="s">'stateabbr'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'CA'</span><span class="p">)</span> <span class="o">&amp;</span>
+    <span class="p">(</span><span class="n">places</span><span class="p">[</span><span class="s">'measureid'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'CASTHMA'</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>This yields 116 rows—<strong>two entries per county</strong> representing:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Crude prevalence</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Age-adjusted prevalence</code></li>
+</ul>
+
+<h4 id="initial-cleaning">Initial Cleaning</h4>
+
+<p>We removed repeated or irrelevant columns:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_places</span> <span class="o">=</span> <span class="n">ca_places</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+    <span class="s">"year"</span><span class="p">,</span> <span class="s">"stateabbr"</span><span class="p">,</span> <span class="s">"statedesc"</span><span class="p">,</span> <span class="s">"datasource"</span><span class="p">,</span>
+    <span class="s">"geolocation"</span><span class="p">,</span> <span class="s">"locationid"</span><span class="p">,</span> <span class="s">"category"</span><span class="p">,</span> <span class="s">"categoryid"</span><span class="p">,</span>
+    <span class="s">"measure"</span><span class="p">,</span> <span class="s">"measureid"</span><span class="p">,</span> <span class="s">"short_question_text"</span><span class="p">,</span>
+    <span class="s">"data_value_unit"</span><span class="p">,</span> <span class="s">"data_value_footnote_symbol"</span><span class="p">,</span> <span class="s">"data_value_footnote"</span>
+<span class="p">])</span>
+</code></pre></div></div>
+
+<p><strong>Why drop these?</strong></p>
+
+<ul>
+  <li>The dataset is fixed to 2022 California.</li>
+  <li>Identifiers and geolocation data were redundant with the <code class="language-plaintext highlighter-rouge">'locationname'</code> column.</li>
+  <li>Units and footnotes were constant or missing.</li>
+</ul>
+
+<h4 id="pivoting-the-table">Pivoting the Table</h4>
+
+<p>We pivoted the table to consolidate the two prevalence types into a single row per county:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prevalence_pivot</span> <span class="o">=</span> <span class="n">ca_places</span><span class="p">.</span><span class="n">pivot</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s">'locationname'</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="s">'data_value_type'</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s">'data_value'</span><span class="p">,</span> <span class="s">'low_confidence_limit'</span><span class="p">,</span> <span class="s">'high_confidence_limit'</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Columns were then renamed for clarity:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prevalence_pivot</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="s">'age'</span> <span class="k">if</span> <span class="s">'Age'</span> <span class="ow">in</span> <span class="n">val_type</span> <span class="k">else</span> <span class="s">'crude'</span><span class="si">}</span><span class="s">_</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s">"</span>
+    <span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="n">val_type</span> <span class="ow">in</span> <span class="n">prevalence_pivot</span><span class="p">.</span><span class="n">columns</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<h4 id="merging-population-data">Merging Population Data</h4>
+
+<p>We joined in the population columns for each county:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_places</span> <span class="o">=</span> <span class="n">ca_places</span><span class="p">[[</span><span class="s">'locationname'</span><span class="p">,</span> <span class="s">'totalpopulation'</span><span class="p">,</span> <span class="s">'totalpop18plus'</span><span class="p">]].</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">ca_places</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">prevalence_pivot</span><span class="p">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">ca_places</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">'locationname'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Result:</strong> A clean DataFrame with 58 counties and the following columns:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">locationname</code></td>
+      <td>County name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">age_data_value</code></td>
+      <td>% of adults with asthma (age-adjusted)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">crude_data_value</code></td>
+      <td>% of adults with asthma (crude)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">*_low_confidence_limit</code> / <code class="language-plaintext highlighter-rouge">*_high_confidence_limit</code></td>
+      <td>Lower/upper bounds</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">totalpopulation</code> / <code class="language-plaintext highlighter-rouge">totalpop18plus</code></td>
+      <td>Population sizes</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="pm25-pollution-data-epa-dataset">PM2.5 Pollution Data (EPA Dataset)</h3>
+
+<p>We filtered EPA’s 2022 daily air quality data for California counties:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pollutant_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'ad_viz_plotval_data.csv'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="initial-cleaning-1">Initial Cleaning</h4>
+
+<p>We removed columns unrelated to our research question:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pollutant_copy</span> <span class="o">=</span> <span class="n">pollutant_data</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+    <span class="s">'AQS Parameter Code'</span><span class="p">,</span> <span class="s">'AQS Parameter Description'</span><span class="p">,</span> <span class="s">'Method Code'</span><span class="p">,</span> <span class="s">'Method Description'</span><span class="p">,</span>
+    <span class="s">'CBSA Code'</span><span class="p">,</span> <span class="s">'CBSA Name'</span><span class="p">,</span> <span class="s">'Units'</span><span class="p">,</span> <span class="s">'Percent Complete'</span><span class="p">,</span> <span class="s">'County FIPS Code'</span><span class="p">,</span>
+    <span class="s">'Source'</span><span class="p">,</span> <span class="s">'State'</span>
+<span class="p">])</span>
+</code></pre></div></div>
+
+<p><strong>Why drop these?</strong></p>
+
+<ul>
+  <li>Monitoring metadata (e.g., method descriptions) was not required for our analysis.</li>
+  <li>All data was already scoped to California and PM2.5.</li>
+</ul>
+
+<h4 id="handling-missing-values">Handling Missing Values</h4>
+
+<p>We replaced <code class="language-plaintext highlighter-rouge">NaN</code> entries in <code class="language-plaintext highlighter-rouge">'Local Site Name'</code> with <code class="language-plaintext highlighter-rouge">"UNKNOWN"</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pollutant_copy</span><span class="p">[</span><span class="s">'Local Site Name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pollutant_copy</span><span class="p">[</span><span class="s">'Local Site Name'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="s">'UNKNOWN'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="final-dataset-summary">Final Dataset Summary</h4>
+
+<p>Our cleaned air quality dataset contains:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Date</code></td>
+      <td>Date of observation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Site ID</code> / <code class="language-plaintext highlighter-rouge">POC</code></td>
+      <td>Monitoring site and instrument identifiers</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Daily Mean PM2.5 Concentration</code></td>
+      <td>µg/m³ value for that day</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Daily AQI Value</code></td>
+      <td>EPA’s Air Quality Index</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Local Site Name</code></td>
+      <td>Monitoring site label</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">County</code></td>
+      <td>California county name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Site Latitude</code> / <code class="language-plaintext highlighter-rouge">Site Longitude</code></td>
+      <td>Geolocation of monitoring site</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>No missing values</strong> remain, and we’re ready to begin analysis and data integration.</p>
+
+<hr />
+
+<h2 id="results">Results</h2>
+
+<h3 id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+
+<h4 id="top-10-counties-in-california-with-the-highest-average-pm25-concentrations-2022">Top 10 Counties in California with the Highest Average PM2.5 Concentrations (2022)</h4>
+
+<p>To identify which counties experience the worst air quality, we computed the average daily mean PM2.5 concentration across all 2022 measurements for each California county. We then visualized the top 10 counties with the highest concentrations.</p>
+
+<p><img src="/images/top10_pm.png" alt="Top 10 Counties Bar Chart" /></p>
+
+<p><strong>Key Insights:</strong></p>
+
+<ul>
+  <li>The counties with the highest average PM2.5 concentrations were <strong>Kings, Stanislaus, Plumas, Los Angeles, Trinity, Tulare, Madera, Fresno, Mendocino, and Merced</strong>.</li>
+  <li>
+    <p>Categorizing these by region:</p>
+
+    <ul>
+      <li><strong>6/10</strong> were in <em>Central California</em></li>
+      <li><strong>3/10</strong> were in <em>Northern California</em></li>
+      <li><strong>1/10</strong> was in <em>Southern California</em></li>
+    </ul>
+  </li>
+  <li>This suggests <strong>Central California experiences the poorest air quality</strong>, possibly due to its inland geography that limits coastal air flow.</li>
+  <li>All 10 counties had average PM2.5 concentrations <strong>above 9 µg/m³</strong>, the National Park Service’s cutoff for ‘Good’ air quality.</li>
+  <li>For example, <strong>Kings County</strong> had an average of <strong>14.4 µg/m³</strong>, which is <strong>60% higher</strong> than the recommended ‘Good’ level:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">14.4</span> <span class="o">/</span> <span class="mi">9</span> <span class="err">≈</span> <span class="mf">1.60</span>
+</code></pre></div></div>
+
+<h4 id="proportion-of-counties-with-good-pm25-levels">Proportion of Counties with ‘Good’ PM2.5 Levels</h4>
+
+<p>Approximately <strong>two-thirds (66%)</strong> of California counties had average PM2.5 levels below or equal to 9 µg/m³, qualifying as ‘Good’ air quality. The remaining one-third fell into the ‘Moderate’ category.</p>
+
+<hr />
+
+<h3 id="monthly-comparison-of-mean-and-median-pm25-concentrations">Monthly Comparison of Mean and Median PM2.5 Concentrations</h3>
+
+<p>To explore seasonal variation, we examined how PM2.5 concentrations fluctuated month-to-month in each county. We computed both the <strong>mean</strong> and <strong>median</strong> for each county and month in 2022.</p>
+
+<h4 id="interactive-visualization">Interactive Visualization</h4>
+
+<p>Use the dropdowns below to select a county and compare monthly PM2.5 concentrations:</p>
+
+<iframe src="assets/monthly_stats.html" width="800" height="600" frameborder="0"></iframe>
+
+<p><strong>Distribution Patterns:</strong></p>
+
+<ul>
+  <li>Both mean and median PM2.5 values tend to dip in <strong>spring and early summer</strong>, forming a <strong>bimodal pattern</strong> with higher concentrations in <strong>winter and late summer/early fall</strong>.</li>
+  <li><strong>August and September</strong> often show spikes, which may reflect wildfire activity.</li>
+</ul>
+
+<p><strong>Notable Outliers (Mean ≫ Median):</strong></p>
+
+<ul>
+  <li><strong>El Dorado (Sept):</strong> Mean = 15.4, Median = 3.5</li>
+  <li><strong>Mariposa (Jul–Sept):</strong> Mean = 20.2–32.6, Median = 12.1–9.0</li>
+  <li><strong>Nevada (Sept):</strong> Mean = 30.4, Median = 4.1</li>
+  <li><strong>Placer (Sept):</strong> Mean = 24.4, Median = 6.0</li>
+  <li><strong>Siskiyou (Jul):</strong> Mean = 20.0, Median = 3.6</li>
+</ul>
+
+<p>These large gaps suggest that <strong>a small number of extreme PM2.5 days heavily skew the mean</strong>, likely corresponding to <strong>short-term pollution events such as wildfires</strong>.</p>
+
+<hr />
+
+<h2 id="interactive-map-of-pm25-concentration-in-california-2022">Interactive Map of PM2.5 Concentration in California (2022)</h2>
+
+<p>We created a choropleth animation using Plotly to display the <strong>monthly average PM2.5 levels</strong> across California counties.</p>
+
+<p><strong>Key Observations:</strong></p>
+
+<ul>
+  <li>PM2.5 concentrations are <strong>highest in Central California</strong> during winter.</li>
+  <li>There is a shift in <strong>elevated PM2.5 levels to Southern California</strong> in spring.</li>
+</ul>
+
+<iframe src="assets/timeline_chloropleth.html" width="800" height="600" frameborder="0"></iframe>
+<hr />
+
+<h2 id="asthma-prevalence-in-california-2022">Asthma Prevalence in California (2022)</h2>
+
+<p>To compare air quality with respiratory health, we visualized asthma prevalence from CDC’s PLACES dataset.</p>
+
+<iframe src="assets/asthma_chloropleth.html" width="800" height="600" frameborder="0"></iframe>
+<hr />
+
+<h2 id="side-by-side-comparison-pm25-and-asthma-prevalence">Side-by-Side Comparison: PM2.5 and Asthma Prevalence</h2>
+
+<p>To assess the potential correlation between PM2.5 exposure and asthma:</p>
+
+<iframe src="assets/comparison_chloropleth.html" width="800" height="600" frameborder="0"></iframe>
+<p><strong>Insights:</strong></p>
+
+<ul>
+  <li>Central California shows overlap between high PM2.5 and high asthma rates.</li>
+  <li>Northern California has <strong>high asthma prevalence despite moderate PM2.5</strong>, suggesting other contributing factors (e.g., rural health access, housing quality).</li>
+  <li>Southern California, despite seasonal PM2.5 spikes, shows <strong>lower asthma prevalence</strong>.</li>
+</ul>
+
+<hr />
+
+<h2 id="aqi-levels-by-county-2022">AQI Levels by County (2022)</h2>
+
+<p>We applied a similar analysis to <strong>Air Quality Index (AQI)</strong> to explore general pollution exposure.</p>
+
+<iframe src="assets/aqi_levels.html" width="800" height="600" frameborder="0"></iframe>
+<hr />
+
+<h2 id="regional-asthma-analysis">Regional Asthma Analysis</h2>
+
+<p>To contextualize our findings further, we examined asthma rates <strong>by region</strong>.</p>
+
+<h3 id="regional-distribution-of-asthma-age-adjusted">Regional Distribution of Asthma (Age-Adjusted)</h3>
+
+<p><img src="/images/asthma_boxplot.png" alt="Boxplot by Region" /></p>
+
+<h3 id="top-10-counties-for-asthma-prevalence">Top 10 Counties for Asthma Prevalence</h3>
+
+<p><img src="/images/asthma_top10.png" alt="Top 10 Counties" /></p>
+
+<p><strong>Summary:</strong></p>
+
+<ul>
+  <li><strong>Northern California</strong> leads in asthma prevalence.</li>
+  <li><strong>Southern California</strong> has neither high asthma nor high PM2.5 presence in the top 10 counties.</li>
+  <li>These patterns support the hypothesis that <strong>PM2.5 concentrations correlate with asthma rates</strong>, but also emphasize the <strong>role of confounders</strong> (e.g., population density, healthcare access, socioeconomic status).</li>
+</ul>
+
+<hr />
+
+<h2 id="ethics--privacy">Ethics &amp; Privacy</h2>
+
+<p>Several ethical considerations and limitations must be acknowledged when working with health and environmental datasets:</p>
+
+<ul>
+  <li><strong>Sampling Bias</strong>: The PLACES dataset primarily includes individuals at or below 150% of the poverty level. This introduces potential bias, as higher-income populations are underrepresented, possibly skewing the results toward specific socioeconomic experiences.</li>
+  <li><strong>Data Collection Methods</strong>: Differences in data collection practices across counties (e.g., census methodology) may affect accuracy and introduce inconsistencies.</li>
+  <li><strong>Self-Reporting Limitations</strong>: Survey responses are subject to biases like misreporting or social desirability, which may impact the reliability of asthma prevalence statistics.</li>
+  <li><strong>Privacy and Consent</strong>: The data was collected with informed consent and anonymized for public use, but it still involves sensitive information about health and financial status.</li>
+  <li><strong>Confounding Variables</strong>: Factors such as smoking rates, housing conditions, and healthcare access were not included, though they likely influence asthma outcomes.</li>
+</ul>
+
+<p>Moving forward, we plan to apply <strong>Spearman’s rank correlation</strong> to reduce the noise from self-reporting and assess non-linear relationships. We also propose further statistical modeling after identifying demographic imbalances or confounding variables through deeper analysis.</p>
+
+<hr />
+
+<h2 id="discussion--conclusion">Discussion &amp; Conclusion</h2>
+
+<p>This project investigated the potential relationship between <strong>PM2.5 air pollution</strong> and <strong>asthma prevalence</strong> in California adults. We combined data from:</p>
+
+<ul>
+  <li>The <strong>CDC PLACES dataset</strong> (asthma prevalence)</li>
+  <li>The <strong>EPA Air Quality dataset</strong> (PM2.5 &amp; AQI levels)</li>
+</ul>
+
+<p>Our analysis focused on spatial and regional differences across California counties in 2022.</p>
+
+<h3 id="summary-of-findings">Summary of Findings</h3>
+
+<ul>
+  <li><strong>Top PM2.5 Counties</strong>: Mostly located in Central California, with some in Northern California.</li>
+  <li><strong>Top Asthma Counties</strong>: Predominantly found in Northern California, suggesting other factors beyond PM2.5 may contribute to prevalence.</li>
+  <li><strong>Choropleth Maps</strong>: Central counties consistently showed high PM2.5 and AQI levels, as well as elevated asthma rates.</li>
+  <li>
+    <p><strong>Regional Trends</strong>:</p>
+
+    <ul>
+      <li>Northern &amp; Central California both reported ~10.5% adult asthma rates.</li>
+      <li>Southern California had slightly lower rates (~10%).</li>
+    </ul>
+  </li>
+  <li><strong>Overlap</strong>: Areas with high PM2.5 concentrations often overlap with high asthma prevalence, particularly in Central California.</li>
+</ul>
+
+<hr />
+
+<h2 id="limitations">Limitations</h2>
+
+<p>While our results are compelling, there are important caveats:</p>
+
+<ul>
+  <li><strong>Spatial Aggregation</strong>: Averaging air quality data at the county level may overlook urban-rural variation.</li>
+  <li><strong>Single-Year Snapshot</strong>: We used 2022 data only, which does not capture seasonal or long-term trends.</li>
+  <li><strong>Missing Confounders</strong>: Key variables (e.g., smoking rates, healthcare access) were not included and may influence asthma outcomes.</li>
+  <li><strong>Non-Causal Relationships</strong>: This is a <strong>correlational</strong> analysis. No definitive conclusions about causation can be made without further study.</li>
+</ul>
+
+<p>Future research should incorporate <strong>multi-year time series</strong>, <strong>demographic factors</strong>, and <strong>environmental variables</strong> to better understand long-term and underlying influences on asthma.</p>
+
+<hr />
+
+<h2 id="societal-impact">Societal Impact</h2>
+
+<p>Our findings spotlight environmental injustice:</p>
+
+<ul>
+  <li><strong>Low-Income Exposure</strong>: High PM2.5 concentrations and asthma prevalence were disproportionately observed in lower-income areas.</li>
+  <li>
+    <p><strong>Policy Implications</strong>: Results underscore the need for:</p>
+
+    <ul>
+      <li>Stricter environmental regulations in high-risk counties</li>
+      <li>Better access to asthma care and education</li>
+      <li>Targeted public health interventions</li>
+    </ul>
+  </li>
+</ul>
+
+<p>This study advocates for an equitable approach to environmental health, especially in underserved communities.</p>
+
+<hr />
+
+<h2 id="team-contributions">Team Contributions</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contributions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Kate</strong></td>
+      <td>Coordinated project, built interactive choropleth maps (PM2.5, asthma), edited final video</td>
+    </tr>
+    <tr>
+      <td><strong>Katelyn</strong></td>
+      <td>Cleaned PLACES data, led EDA, created regional box plots/bar charts</td>
+    </tr>
+    <tr>
+      <td><strong>Heidi</strong></td>
+      <td>Cleaned PM2.5 data, created bar charts of top counties, tracked project progress</td>
+    </tr>
+    <tr>
+      <td><strong>Kyla</strong></td>
+      <td>Conducted literature review, summarized pollutant data, built county-level PM2.5 plots</td>
+    </tr>
+    <tr>
+      <td><strong>Felix</strong></td>
+      <td>Led ethics section, summarized asthma data insights, created AQI choropleths</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="how-to-use-this-repository">How to Use This Repository</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">final_analysis.ipynb</code>: Full pipeline from data cleaning to final visualizations.</li>
+  <li><code class="language-plaintext highlighter-rouge">data/</code>: Raw and cleaned datasets.</li>
+  <li><code class="language-plaintext highlighter-rouge">assets/</code>: Interactive visualizations.</li>
+  <li><code class="language-plaintext highlighter-rouge">images/</code>: Static visualizations.</li>
+  <li><a href="https://youtu.be/Oz4j4woGs2w">Demo Video</a>: Walkthrough of our findings and visualizations.</li>
+</ul>
+
+<hr />
+
+<h2 id="contact">Contact</h2>
+
+<p><strong>Kate Feng</strong>
+📧 <a href="mailto:kate18005@gmail.com">kate18005@gmail.com</a></p>
+
+
+
+  </div>
+
+      </div>
+    </main><link
+  id="fa-stylesheet"
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"
+/>
+
+<footer class="site-footer h-card"></footer>
+
+</body>
+
+</html>

@@ -1,10 +1,8 @@
 # The Influence of PM2.5 Air Pollution on Asthma Rates in California Adults
 
-Great — thanks for the detailed content. Based on your goal of selectively including key code sections in your project page (not overwhelming it with everything), here's your **revised first section** with **important, well-explained code blocks integrated**.
+by Kate Feng, Katelyn Abille, Heidi Tam, Kyla Park, Felix Najera
 
----
-
-## 🧪 Abstract
+## Abstract
 
 Air pollutants such as particulate matter 2.5 (PM2.5) are a significant public health concern, worsened by the effects of climate change. Our study investigates the correlation between PM2.5 pollution levels and adult asthma prevalence in California, aiming to identify regional patterns and explore confounding factors. We integrated county-level asthma prevalence data from the CDC PLACES dataset with EPA’s PM2.5 air quality data.
 
@@ -14,13 +12,13 @@ While our exploratory analysis found regional overlaps between PM2.5 and asthma,
 
 ---
 
-## 🎯 Research Question
+## Research Question
 
 **How do the prevalence and proximity to PM2.5 pollution correlate with the incidences of asthma in adults in California?**
 
 ---
 
-## 📚 Background and Prior Work
+## Background and Prior Work
 
 The American Lung Association conducts annual “State of the Air” reports and recently revealed that 40% of Americans live in regions with unhealthy air pollution levels. This indicates a decline in progress toward clean air, which is assumed to have been exacerbated by the effects of climate change. Since 2020, the number of affected individuals has surged by nearly 12 million, rising from 131 million. This alarming trend underscores the need to examine how industrial pollutants impact public health, particularly regarding respiratory diseases such as asthma. As air quality continues to deteriorate in many urban centers, it is essential to investigate the correlation between pollution exposure and the incidence of these health issues, especially among the most vulnerable populations in densely populated areas of the United States.
 
@@ -36,13 +34,13 @@ Another study conducted was in Italy starting in 2000. The most populated cities
 
 ---
 
-## 🧪 Hypothesis
+## Hypothesis
 
 > There will be a strong positive correlation between the prevalence and proximity to PM2.5 pollution and the incidence of asthma in adults, in the state of California.
 
 ---
 
-## 📊 Data Sources
+## Data Sources
 
 - **CDC PLACES County-Level Health Data**
   [Link](https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data)
@@ -52,7 +50,7 @@ Another study conducted was in Italy starting in 2000. The most populated cities
 
 ---
 
-## 🧼 Data Collection & Preprocessing
+## Data Collection & Preprocessing
 
 ### CDC PLACES: County-Level Asthma Prevalence
 
@@ -97,7 +95,7 @@ places_ca_asthma = places_ca[
 ]
 ```
 
-✅ **Validation Check:**
+**Validation Check:**
 
 ```python
 # Confirm all 58 counties are included
@@ -131,7 +129,7 @@ epa_grouped = epa.groupby("County")[["PM2.5_Concentration", "AQI_Value"]].mean()
 
 ---
 
-### 🔗 Merging the Datasets
+### Merging the Datasets
 
 We merged the datasets by matching county names:
 
@@ -151,17 +149,13 @@ This left us with a clean dataset, one row per county, containing:
 
 ---
 
-Here’s a polished **"Cleaning the Data"** section for your GitHub project README:
-
----
-
-## 🧹 Cleaning the Data
+## Cleaning the Data
 
 To prepare for analysis, we cleaned and filtered both the **asthma prevalence** and **PM2.5 air pollution** datasets to focus specifically on **California in 2022**. Below is an overview of our filtering and transformation process.
 
 ---
 
-### 🫁 Asthma Data (PLACES Dataset)
+### Asthma Data (PLACES Dataset)
 
 We begin by narrowing our scope to only California counties and filtering for the **"Current asthma among adults"** measure:
 
@@ -177,7 +171,7 @@ This yields 116 rows—**two entries per county** representing:
 - `Crude prevalence`
 - `Age-adjusted prevalence`
 
-#### 📦 Initial Cleaning
+#### Initial Cleaning
 
 We removed repeated or irrelevant columns:
 
@@ -190,13 +184,13 @@ ca_places = ca_places.drop(columns=[
 ])
 ```
 
-📌 **Why drop these?**
+**Why drop these?**
 
 - The dataset is fixed to 2022 California.
 - Identifiers and geolocation data were redundant with the `'locationname'` column.
 - Units and footnotes were constant or missing.
 
-#### 🔁 Pivoting the Table
+#### Pivoting the Table
 
 We pivoted the table to consolidate the two prevalence types into a single row per county:
 
@@ -217,7 +211,7 @@ prevalence_pivot.columns = [
 ]
 ```
 
-#### ➕ Merging Population Data
+#### Merging Population Data
 
 We joined in the population columns for each county:
 
@@ -226,7 +220,7 @@ ca_places = ca_places[['locationname', 'totalpopulation', 'totalpop18plus']].dro
 ca_places = pd.merge(prevalence_pivot.reset_index(), ca_places, on='locationname')
 ```
 
-✅ **Result:** A clean DataFrame with 58 counties and the following columns:
+**Result:** A clean DataFrame with 58 counties and the following columns:
 
 | Column                                               | Description                            |
 | ---------------------------------------------------- | -------------------------------------- |
@@ -238,7 +232,7 @@ ca_places = pd.merge(prevalence_pivot.reset_index(), ca_places, on='locationname
 
 ---
 
-### 🌫️ PM2.5 Pollution Data (EPA Dataset)
+### PM2.5 Pollution Data (EPA Dataset)
 
 We filtered EPA's 2022 daily air quality data for California counties:
 
@@ -246,7 +240,7 @@ We filtered EPA's 2022 daily air quality data for California counties:
 pollutant_data = pd.read_csv('ad_viz_plotval_data.csv')
 ```
 
-#### 📦 Initial Cleaning
+#### Initial Cleaning
 
 We removed columns unrelated to our research question:
 
@@ -258,12 +252,12 @@ pollutant_copy = pollutant_data.drop(columns=[
 ])
 ```
 
-📌 **Why drop these?**
+**Why drop these?**
 
 - Monitoring metadata (e.g., method descriptions) was not required for our analysis.
 - All data was already scoped to California and PM2.5.
 
-#### 🧼 Handling Missing Values
+#### Handling Missing Values
 
 We replaced `NaN` entries in `'Local Site Name'` with `"UNKNOWN"`:
 
@@ -271,7 +265,7 @@ We replaced `NaN` entries in `'Local Site Name'` with `"UNKNOWN"`:
 pollutant_copy['Local Site Name'] = pollutant_copy['Local Site Name'].fillna('UNKNOWN')
 ```
 
-#### 🧾 Final Dataset Summary
+#### Final Dataset Summary
 
 Our cleaned air quality dataset contains:
 
@@ -285,11 +279,7 @@ Our cleaned air quality dataset contains:
 | `County`                           | California county name                     |
 | `Site Latitude` / `Site Longitude` | Geolocation of monitoring site             |
 
-✅ **No missing values** remain, and we’re ready to begin analysis and data integration.
-
----
-
-Here is the **"Results: Exploratory Data Analysis"** section written for your project’s README. It aligns with your formatting, includes all interpretations, and incorporates the interactive and static visualizations:
+**No missing values** remain, and we’re ready to begin analysis and data integration.
 
 ---
 
@@ -358,11 +348,7 @@ These large gaps suggest that **a small number of extreme PM2.5 days heavily ske
 
 ---
 
-Great! Now that you're wrapping up your **Exploratory Data Analysis** section, here’s a clean, markdown-compatible version of this last section that fits your README:
-
----
-
-## 📍 Interactive Map of PM2.5 Concentration in California (2022)
+## Interactive Map of PM2.5 Concentration in California (2022)
 
 We created a choropleth animation using Plotly to display the **monthly average PM2.5 levels** across California counties.
 
@@ -379,7 +365,7 @@ We created a choropleth animation using Plotly to display the **monthly average 
 ></iframe>
 ---
 
-## 🫁 Asthma Prevalence in California (2022)
+## Asthma Prevalence in California (2022)
 
 To compare air quality with respiratory health, we visualized asthma prevalence from CDC’s PLACES dataset.
 
@@ -391,7 +377,7 @@ To compare air quality with respiratory health, we visualized asthma prevalence 
 ></iframe>
 ---
 
-## 🔍 Side-by-Side Comparison: PM2.5 and Asthma Prevalence
+## Side-by-Side Comparison: PM2.5 and Asthma Prevalence
 
 To assess the potential correlation between PM2.5 exposure and asthma:
 
@@ -409,7 +395,7 @@ To assess the potential correlation between PM2.5 exposure and asthma:
 
 ---
 
-## 🌫️ AQI Levels by County (2022)
+## AQI Levels by County (2022)
 
 We applied a similar analysis to **Air Quality Index (AQI)** to explore general pollution exposure.
 
@@ -421,7 +407,7 @@ We applied a similar analysis to **Air Quality Index (AQI)** to explore general 
 ></iframe>
 ---
 
-## 🔬 Regional Asthma Analysis
+## Regional Asthma Analysis
 
 To contextualize our findings further, we examined asthma rates **by region**.
 
@@ -440,3 +426,95 @@ To contextualize our findings further, we examined asthma rates **by region**.
 - These patterns support the hypothesis that **PM2.5 concentrations correlate with asthma rates**, but also emphasize the **role of confounders** (e.g., population density, healthcare access, socioeconomic status).
 
 ---
+
+## Ethics & Privacy
+
+Several ethical considerations and limitations must be acknowledged when working with health and environmental datasets:
+
+- **Sampling Bias**: The PLACES dataset primarily includes individuals at or below 150% of the poverty level. This introduces potential bias, as higher-income populations are underrepresented, possibly skewing the results toward specific socioeconomic experiences.
+- **Data Collection Methods**: Differences in data collection practices across counties (e.g., census methodology) may affect accuracy and introduce inconsistencies.
+- **Self-Reporting Limitations**: Survey responses are subject to biases like misreporting or social desirability, which may impact the reliability of asthma prevalence statistics.
+- **Privacy and Consent**: The data was collected with informed consent and anonymized for public use, but it still involves sensitive information about health and financial status.
+- **Confounding Variables**: Factors such as smoking rates, housing conditions, and healthcare access were not included, though they likely influence asthma outcomes.
+
+Moving forward, we plan to apply **Spearman’s rank correlation** to reduce the noise from self-reporting and assess non-linear relationships. We also propose further statistical modeling after identifying demographic imbalances or confounding variables through deeper analysis.
+
+---
+
+## Discussion & Conclusion
+
+This project investigated the potential relationship between **PM2.5 air pollution** and **asthma prevalence** in California adults. We combined data from:
+
+- The **CDC PLACES dataset** (asthma prevalence)
+- The **EPA Air Quality dataset** (PM2.5 & AQI levels)
+
+Our analysis focused on spatial and regional differences across California counties in 2022.
+
+### Summary of Findings
+
+- **Top PM2.5 Counties**: Mostly located in Central California, with some in Northern California.
+- **Top Asthma Counties**: Predominantly found in Northern California, suggesting other factors beyond PM2.5 may contribute to prevalence.
+- **Choropleth Maps**: Central counties consistently showed high PM2.5 and AQI levels, as well as elevated asthma rates.
+- **Regional Trends**:
+
+  - Northern & Central California both reported \~10.5% adult asthma rates.
+  - Southern California had slightly lower rates (\~10%).
+
+- **Overlap**: Areas with high PM2.5 concentrations often overlap with high asthma prevalence, particularly in Central California.
+
+---
+
+## Limitations
+
+While our results are compelling, there are important caveats:
+
+- **Spatial Aggregation**: Averaging air quality data at the county level may overlook urban-rural variation.
+- **Single-Year Snapshot**: We used 2022 data only, which does not capture seasonal or long-term trends.
+- **Missing Confounders**: Key variables (e.g., smoking rates, healthcare access) were not included and may influence asthma outcomes.
+- **Non-Causal Relationships**: This is a **correlational** analysis. No definitive conclusions about causation can be made without further study.
+
+Future research should incorporate **multi-year time series**, **demographic factors**, and **environmental variables** to better understand long-term and underlying influences on asthma.
+
+---
+
+## Societal Impact
+
+Our findings spotlight environmental injustice:
+
+- **Low-Income Exposure**: High PM2.5 concentrations and asthma prevalence were disproportionately observed in lower-income areas.
+- **Policy Implications**: Results underscore the need for:
+
+  - Stricter environmental regulations in high-risk counties
+  - Better access to asthma care and education
+  - Targeted public health interventions
+
+This study advocates for an equitable approach to environmental health, especially in underserved communities.
+
+---
+
+## Team Contributions
+
+| Name        | Contributions                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------ |
+| **Kate**    | Coordinated project, built interactive choropleth maps (PM2.5, asthma), edited final video |
+| **Katelyn** | Cleaned PLACES data, led EDA, created regional box plots/bar charts                        |
+| **Heidi**   | Cleaned PM2.5 data, created bar charts of top counties, tracked project progress           |
+| **Kyla**    | Conducted literature review, summarized pollutant data, built county-level PM2.5 plots     |
+| **Felix**   | Led ethics section, summarized asthma data insights, created AQI choropleths               |
+
+---
+
+## How to Use This Repository
+
+- `final_analysis.ipynb`: Full pipeline from data cleaning to final visualizations.
+- `data/`: Raw and cleaned datasets.
+- `assets/`: Interactive visualizations.
+- `images/`: Static visualizations.
+- [Demo Video](https://youtu.be/Oz4j4woGs2w): Walkthrough of our findings and visualizations.
+
+---
+
+## Contact
+
+**Kate Feng**
+📧 [kate18005@gmail.com](mailto:kate18005@gmail.com)
